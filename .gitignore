@@ -1,5 +1,6 @@
 *.ini
 !config.ini.template
+!config/mac_monitor.ini.template
 logs/
 *.log
 __pycache__/

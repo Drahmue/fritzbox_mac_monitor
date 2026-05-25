@@ -1,0 +1,18 @@
+; mac_monitor.ini.template - Vorlage fuer mac_monitor.ini
+; Kopieren nach mac_monitor.ini und Werte eintragen
+; mac_monitor.ini ist gitignored (enthaelt Passwort)
+
+[fritzbox]
+ip = 192.168.178.1
+password = DEIN_FRITZBOX_PASSWORT
+
+[files]
+log_file          = logs/mac_monitor.log
+known_macs_file   = config/known_macs.json
+alerted_macs_file = data/alerted_macs.json
+; Pfad zur notify_config.json des Backup-Projekts (UNC-Pfad auf HauServer)
+notify_config     = \\server\_Batchprozesse\Backup\notify_config.json
+
+[settings]
+; Nur aktive Geraete pruefen (True empfohlen)
+active_only = True
