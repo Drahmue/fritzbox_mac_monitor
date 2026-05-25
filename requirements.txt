@@ -1,5 +1,2 @@
-numpy
-pandas==2.2.3
-openpyxl
-yfinance
-git+https://github.com/Drahmue/ahlib.git
+fritzconnection
+requests
