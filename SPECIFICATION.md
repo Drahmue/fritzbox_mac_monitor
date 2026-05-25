@@ -294,12 +294,13 @@ Quelle: alle dort dokumentierten Geräte-MACs (Hauptnetz + Gastnetz).
 
 ```
 Aufgabe    : FritzboxMacMonitor
-Trigger    : Täglich, 08:00 Uhr
-Aktion     : python D:\dataserver\_Batchprozesse\fritzbox_mac_monitor\src\fritzbox_mac_monitor.py
-Startordner: D:\dataserver\_Batchprozesse\fritzbox_mac_monitor\
+Trigger    : Täglich ab 08:00 Uhr, Wiederholung alle 1 Stunde, Dauer: Unbegrenzt
+Aktion     : python src/fritzbox_mac_monitor.py
+Startordner: D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\
+Benutzer   : Service-Account (unabhängig von Benutzeranmeldung ausführen)
 ```
 
-Alternativ PowerShell-Wrapper analog `start_backup.ps1` (für einheitliches Logging + Telegram bei kritischem Fehler).
+⚠️ Das „Starten in"-Feld ist zwingend erforderlich – relative Pfade (config/, logs/, data/) funktionieren sonst nicht.
 
 ---
 
@@ -325,4 +326,5 @@ Beim nächsten Lauf: kein erneuter Alert für dieselbe MAC.
 
 ## Versions-Historie
 
+- **v1.0.1** - 2026-05-25: Task Scheduler auf stündlich aktualisiert; Deployment-Pfad korrigiert (D:\Dataserver\...)
 - **v1.0.0** - 2026-05-25: Initiale Spezifikation erstellt
