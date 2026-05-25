@@ -61,7 +61,7 @@ def load_config(config_path: str) -> ConfigParser:
         print(f"FEHLER: Konfigurationsdatei nicht gefunden: {config_path}", file=sys.stderr)
         sys.exit(1)
 
-    config = ConfigParser()
+    config = ConfigParser(inline_comment_prefixes=("#", ";"))
     config.read(path, encoding="utf-8")
 
     required = {
@@ -142,9 +142,11 @@ def connect_to_fritzbox(ip: str, password: str) -> FritzHosts:
         _ = fh.get_hosts_info()
         return fh
     except FritzAuthorizationError:
-        logger.critical("Fritz!Box Authentifizierung fehlgeschlagen (falsches Passwort?). IP: %s", ip)
+        screen_and_log(f"KRITISCH: Fritz!Box Authentifizierung fehlgeschlagen (falsches Passwort?). IP: {ip}")
+        logger.critical("Fritz!Box Authentifizierung fehlgeschlagen. IP: %s", ip)
         sys.exit(1)
     except FritzConnectionException as exc:
+        screen_and_log(f"KRITISCH: Fritz!Box nicht erreichbar unter {ip}: {exc}")
         logger.critical("Fritz!Box nicht erreichbar unter %s: %s", ip, exc)
         sys.exit(1)
 
