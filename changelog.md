@@ -1,3 +1,6 @@
+## [1.0.2] - 2026-05-25
+- Task Scheduler: Aufgabe im Ordner „AHSkripts" angelegt
+
 ## [1.0.1] - 2026-05-25
 - Fix: `ConfigParser` mit `inline_comment_prefixes` – Kommentare hinter INI-Werten werden korrekt ignoriert
 - Fix: Kritische Verbindungsfehler (Fritz!Box) werden jetzt auch auf der Konsole ausgegeben

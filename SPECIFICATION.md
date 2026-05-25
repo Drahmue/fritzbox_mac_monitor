@@ -298,6 +298,7 @@ Trigger    : Täglich ab 08:00 Uhr, Wiederholung alle 1 Stunde, Dauer: Unbegrenz
 Aktion     : python src/fritzbox_mac_monitor.py
 Startordner: D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\
 Benutzer   : Service-Account (unabhängig von Benutzeranmeldung ausführen)
+Ordner     : AHSkripts
 ```
 
 ⚠️ Das „Starten in"-Feld ist zwingend erforderlich – relative Pfade (config/, logs/, data/) funktionieren sonst nicht.
