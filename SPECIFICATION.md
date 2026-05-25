@@ -13,7 +13,7 @@
 **Zielumgebung:**
 - Betriebssystem: Windows Server (HauServer), Entwicklung auf Windows 11 (AHMain)
 - Python-Version: 3.12
-- Deployment: HauServer `D:\dataserver\_Batchprozesse\fritzbox_mac_monitor\` – automatischer Start via Windows Task Scheduler (täglich)
+- Deployment: HauServer `D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\` – automatischer Start via Windows Task Scheduler (stündlich)
 
 ---
 
@@ -26,8 +26,8 @@ Entwicklung (AHMain):
 GitHub: Drahmue/fritzbox_mac_monitor (private)
         ↕ git pull
 Produktion (HauServer):
-  D:\dataserver\_Batchprozesse\fritzbox_mac_monitor\
-        → täglich via Windows Task Scheduler
+  D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\
+        → stündlich via Windows Task Scheduler (Ordner: AHSkripts)
 ```
 
 ---
@@ -51,10 +51,10 @@ requests
 ```
 
 ### Benutzer-Setup erforderlich
-- [ ] `config/mac_monitor.ini` aus Template erstellen und Passwort eintragen
-- [ ] Pfad zu `notify_config.json` in INI eintragen (zeigt auf Backup-Projekt-Config)
-- [ ] `config/known_macs.json` mit initialer Whitelist befüllen (aus heimnetz-state.md)
-- [ ] TR-064 in Fritz!Box aktivieren (siehe oben)
+- [x] `config/mac_monitor.ini` aus Template erstellen und Passwort eintragen
+- [x] Pfad zu `notify_config.json` in INI eintragen (zeigt auf Backup-Projekt-Config)
+- [x] `config/known_macs.json` mit initialer Whitelist befüllen (aus heimnetz-state.md + heimnetz-shelly.md, 166 Einträge)
+- [x] TR-064 in Fritz!Box aktivieren (siehe oben)
 
 ---
 
@@ -327,5 +327,6 @@ Beim nächsten Lauf: kein erneuter Alert für dieselbe MAC.
 
 ## Versions-Historie
 
-- **v1.0.1** - 2026-05-25: Task Scheduler auf stündlich aktualisiert; Deployment-Pfad korrigiert (D:\Dataserver\...)
-- **v1.0.0** - 2026-05-25: Initiale Spezifikation erstellt
+- **v1.0.2** - 2026-05-25: Task Scheduler Ordner AHSkripts dokumentiert
+- **v1.0.1** - 2026-05-25: Task Scheduler auf stündlich aktualisiert; Deployment-Pfad korrigiert; ConfigParser inline_comment_prefixes; known_macs.json auf 166 Einträge erweitert
+- **v1.0.0** - 2026-05-25: Initiale Implementierung und Spezifikation; erfolgreicher Testlauf auf AHMain und HauServer

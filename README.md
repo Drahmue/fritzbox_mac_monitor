@@ -50,7 +50,7 @@ python src/fritzbox_mac_monitor.py pfad/zur/config.ini
 D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\
 ```
 
-Windows Task Scheduler: stündlich, Startordner = Projektverzeichnis.
+Windows Task Scheduler: Ordner `AHSkripts`, stündlich ab 08:00, Service-Account, Startordner = Projektverzeichnis.
 
 ## Logs
 
