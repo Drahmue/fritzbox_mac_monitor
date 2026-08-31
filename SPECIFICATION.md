@@ -294,7 +294,7 @@ Quelle: alle dort dokumentierten Geräte-MACs (Hauptnetz + Gastnetz).
 
 ```
 Aufgabe    : FritzboxMacMonitor
-Trigger    : Täglich ab 08:00 Uhr, Wiederholung alle 1 Stunde, Dauer: Unbegrenzt
+Trigger    : Täglich ab 05:00 Uhr, Wiederholung alle 1 Stunde, Dauer: Unbegrenzt
 Aktion     : python src/fritzbox_mac_monitor.py
 Startordner: D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\
 Benutzer   : Service-Account (unabhängig von Benutzeranmeldung ausführen)

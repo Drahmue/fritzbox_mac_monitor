@@ -1,3 +1,18 @@
+## [1.0.5] - 2026-08-29
+- Fix: `fritzconnection` fehlte im globalen Python-3.12-Interpreter (`C:\Program Files\Python312`), den der Task Scheduler nutzt (kein eigenes venv wie z.B. bei `depot`) – Modul nachinstalliert (`pip install fritzconnection`, jetzt 1.15.1)
+- Ursache war ein `ModuleNotFoundError` beim Import ganz oben im Skript, noch vor der Logging-Initialisierung – dadurch blieb `mac_monitor.log` seit 15.07.2026 09:10 unverändert, obwohl der Task seither jede volle Stunde mit `LastTaskResult=1` fehlschlug
+- Fix per manuellem Testlauf verifiziert: `LastTaskResult=0`, neuer Logeintrag 2026-08-29 10:18 (1 neues unbekanntes Gerät erkannt: `AHFold`)
+- Offen: Telegram-Alerting derzeit inaktiv (`notify_config.json` unter `\\hauserver\_Batchprozesse\Backup\` nicht gefunden) – Monitor loggt nur, versendet keine Alerts
+
+## [1.0.4] - 2026-07-22
+- Task Scheduler: Prüfintervall von 5 Minuten auf 60 Minuten erhöht (Trigger-Wiederholung geändert, Start weiterhin 05:00 Uhr)
+- README/SPECIFICATION: Dokumentation an tatsächlichen Task-Scheduler-Trigger angepasst (Start 05:00 statt 08:00)
+
+## [1.0.3] - 2026-07-09
+- known_macs.json: MAC `B0:81:84:A1:67:50` (shelly1g3VorgartenBrunnen, .221) wiederhergestellt – wurde am 07.07.2026 fälschlicherweise als alte Pool-Shelly-MAC entfernt; gehört zu shelly1g3VorgartenBrunnen (aktiv seit April 2025)
+- alerted_macs.json: Eintrag für `B0:81:84:A1:67:50` bereinigt
+- Stand-Datum auf 2026-07-09 aktualisiert
+
 ## [1.0.2] - 2026-05-25
 - Task Scheduler: Aufgabe im Ordner „AHSkripts" angelegt
 

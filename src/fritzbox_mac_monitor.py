@@ -392,6 +392,14 @@ def main() -> None:
     active_hosts = get_active_hosts(fh)
     screen_and_log(f"Aktive Geraete gefunden: {len(active_hosts)}")
 
+    # Nicht mehr aktive MACs aus alerted_macs entfernen (Re-Alert bei Wiederverbindung)
+    active_mac_set = {h["mac"] for h in active_hosts}
+    before = len(alerted_macs)
+    alerted_macs = {mac: info for mac, info in alerted_macs.items() if mac in active_mac_set}
+    removed = before - len(alerted_macs)
+    if removed:
+        screen_and_log(f"Nicht mehr aktive MACs aus alerted_macs entfernt: {removed}")
+
     # Unbekannte MACs ermitteln
     unknown_hosts = check_unknown_macs(active_hosts, known_macs, alerted_macs)
     screen_and_log(f"Unbekannte MACs (neu): {len(unknown_hosts)}")

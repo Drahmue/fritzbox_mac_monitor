@@ -1,5 +1,5 @@
 {
-  "comment": "MAC-Whitelist – Sync mit heimnetz-state.md + heimnetz-shelly.md. Stand: 2026-05-25",
+  "comment": "MAC-Whitelist – Sync mit heimnetz-state.md + heimnetz-shelly.md. Stand: 2026-07-09",
   "known_macs": [
     "10:7C:61:4A:29:82",
     "2C:CF:67:B9:60:5B",
@@ -28,7 +28,6 @@
     "C0:DD:8A:17:F7:34",
     "B0:5C:DA:BD:73:A5",
     "FC:EE:28:09:9F:C5",
-    "20:F8:3B:09:7D:C4",
     "00:09:82:1A:8C:4E",
     "00:09:82:13:CB:AF",
     "AC:81:12:0A:4A:52",
@@ -128,7 +127,7 @@
     "64:B7:08:0D:6C:E0",
     "CC:7B:5C:0E:B7:F4",
     "D4:D4:DA:F3:EC:A8",
-    "B0:81:84:A1:67:50",
+    "B0:81:84:A1:AB:14",
     "64:B7:08:0D:6C:68",
     "D4:D4:DA:F3:F6:F8",
     "34:CD:B0:7C:88:90",
@@ -161,6 +160,20 @@
     "22:A6:2F:9F:70:79",
     "32:3A:FD:B2:48:81",
     "32:3A:FD:85:EA:50",
-    "EE:DF:70:6F:F9:06"
+    "EE:DF:70:6F:F9:06",
+    "90:39:5F:25:AE:A9",
+    "AC:41:6A:18:93:30",
+    "90:39:5F:BB:E8:89",
+    "F4:B8:5E:21:C7:C1",
+    "F4:B8:5E:23:2D:EF",
+    "F4:B8:5E:23:2E:11",
+    "F4:B8:5E:BF:6D:C5",
+    "F4:B8:5E:F0:9A:D5",
+    "F4:B8:5E:5E:79:FF",
+    "F4:B8:5E:F7:10:6C",
+    "F4:B8:5E:89:31:42",
+    "14:B8:5E:F0:9A:D5",
+    "E0:8C:FE:54:BA:60",
+    "B0:81:84:A1:67:50"
   ]
 }
