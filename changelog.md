@@ -2,12 +2,13 @@
 - Fix: `notify_config` in `mac_monitor.ini` zeigte auf falschen UNC-Pfad (`\\hauserver\_Batchprozesse\Backup\...`, Freigabe-Segment `Dataserver` fehlte) – Telegram-Alerting lief seit Einrichtung ins Leere, Monitor loggte unbekannte Geraete nur, ohne zu benachrichtigen
 - Korrigiert auf `\\hauserver\Dataserver\_Batchprozesse\Backup\notify_config.json`, ebenso im Platzhalter `config/mac_monitor.ini.template`
 - Fix verifiziert: Pfad ueber ConfigParser aufgeloest, notify_config.json lesbar, `notify_telegram=true`, Bot-Token/Chat-ID vorhanden
+- Abschluss-Check: Die 4 Dauer-Tasks im Ordner `AHSkripts`, die unter dem Service-Konto laufen (DSL Speedtest Monitoring, Zaehler Monitoring, Stock Monitoring Service, Status Web App), wurden auf Funktionsfaehigkeit geprueft – alle liefen durchgehend und griffen erfolgreich per UNC-Pfad auf die Netzwerkfreigabe zu; keine Anpassung der Zugangsdaten noetig, da das neue Service-Konto-Passwort identisch zum alten gesetzt wurde
 
 ## [1.0.5] - 2026-08-29
 - Fix: `fritzconnection` fehlte im globalen Python-3.12-Interpreter (`C:\Program Files\Python312`), den der Task Scheduler nutzt (kein eigenes venv wie z.B. bei `depot`) – Modul nachinstalliert (`pip install fritzconnection`, jetzt 1.15.1)
 - Ursache war ein `ModuleNotFoundError` beim Import ganz oben im Skript, noch vor der Logging-Initialisierung – dadurch blieb `mac_monitor.log` seit 15.07.2026 09:10 unverändert, obwohl der Task seither jede volle Stunde mit `LastTaskResult=1` fehlschlug
 - Fix per manuellem Testlauf verifiziert: `LastTaskResult=0`, neuer Logeintrag 2026-08-29 10:18 (1 neues unbekanntes Gerät erkannt: `AHFold`)
-- Offen: Telegram-Alerting derzeit inaktiv (`notify_config.json` unter `\\hauserver\_Batchprozesse\Backup\` nicht gefunden) – Monitor loggt nur, versendet keine Alerts
+- Offen (behoben in 1.0.6): Telegram-Alerting war zu diesem Zeitpunkt noch inaktiv (`notify_config.json` unter `\\hauserver\_Batchprozesse\Backup\` nicht gefunden) – Monitor loggte nur, versendete keine Alerts
 
 ## [1.0.4] - 2026-07-22
 - Task Scheduler: Prüfintervall von 5 Minuten auf 60 Minuten erhöht (Trigger-Wiederholung geändert, Start weiterhin 05:00 Uhr)
