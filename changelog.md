@@ -1,3 +1,8 @@
+## [1.0.7] - 2026-08-31
+- known_macs.json: `AHFold` (`7A:68:0D:E2:EF:5D`, .58) und `shellyfloodHebe` (`EC:64:C9:C1:E5:7D`, .60) als legitime Geraete whitelisted – beide waren seit 29./30.08.2026 wiederholt als unbekannt geflaggt worden, User hat sie als bekannt bestaetigt (176 Eintraege)
+- alerted_macs.json bereinigt: `AHFold`-Eintrag entfernt, der als "bereits gemeldet" markiert war, obwohl der zugehoerige Telegram-Alert wegen des in 1.0.6 gefixten Pfad-Bugs nie tatsaechlich zugestellt wurde
+- Fix verifiziert: Testlauf zeigt "Bekannte MACs geladen: 176", "Bereits gemeldete MACs: 0", "Unbekannte MACs (neu): 0"
+
 ## [1.0.6] - 2026-08-31
 - Fix: `notify_config` in `mac_monitor.ini` zeigte auf falschen UNC-Pfad (`\\hauserver\_Batchprozesse\Backup\...`, Freigabe-Segment `Dataserver` fehlte) – Telegram-Alerting lief seit Einrichtung ins Leere, Monitor loggte unbekannte Geraete nur, ohne zu benachrichtigen
 - Korrigiert auf `\\hauserver\Dataserver\_Batchprozesse\Backup\notify_config.json`, ebenso im Platzhalter `config/mac_monitor.ini.template`

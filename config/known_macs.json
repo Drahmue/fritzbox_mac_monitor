@@ -1,6 +1,8 @@
 {
-  "comment": "MAC-Whitelist – Sync mit heimnetz-state.md + heimnetz-shelly.md. Stand: 2026-07-09",
+  "comment": "MAC-Whitelist – Sync mit heimnetz-state.md + heimnetz-shelly.md. Stand: 2026-08-31",
   "known_macs": [
+    "7A:68:0D:E2:EF:5D",
+    "EC:64:C9:C1:E5:7D",
     "10:7C:61:4A:29:82",
     "2C:CF:67:B9:60:5B",
     "2C:CF:67:B9:69:D4",
