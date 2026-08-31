@@ -1,3 +1,8 @@
+## [1.0.6] - 2026-08-31
+- Fix: `notify_config` in `mac_monitor.ini` zeigte auf falschen UNC-Pfad (`\\hauserver\_Batchprozesse\Backup\...`, Freigabe-Segment `Dataserver` fehlte) – Telegram-Alerting lief seit Einrichtung ins Leere, Monitor loggte unbekannte Geraete nur, ohne zu benachrichtigen
+- Korrigiert auf `\\hauserver\Dataserver\_Batchprozesse\Backup\notify_config.json`, ebenso im Platzhalter `config/mac_monitor.ini.template`
+- Fix verifiziert: Pfad ueber ConfigParser aufgeloest, notify_config.json lesbar, `notify_telegram=true`, Bot-Token/Chat-ID vorhanden
+
 ## [1.0.5] - 2026-08-29
 - Fix: `fritzconnection` fehlte im globalen Python-3.12-Interpreter (`C:\Program Files\Python312`), den der Task Scheduler nutzt (kein eigenes venv wie z.B. bei `depot`) – Modul nachinstalliert (`pip install fritzconnection`, jetzt 1.15.1)
 - Ursache war ein `ModuleNotFoundError` beim Import ganz oben im Skript, noch vor der Logging-Initialisierung – dadurch blieb `mac_monitor.log` seit 15.07.2026 09:10 unverändert, obwohl der Task seither jede volle Stunde mit `LastTaskResult=1` fehlschlug

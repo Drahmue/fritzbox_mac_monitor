@@ -11,7 +11,7 @@ log_file          = logs/mac_monitor.log
 known_macs_file   = config/known_macs.json
 alerted_macs_file = data/alerted_macs.json
 ; Pfad zur notify_config.json des Backup-Projekts (UNC-Pfad auf HauServer)
-notify_config     = \\server\_Batchprozesse\Backup\notify_config.json
+notify_config     = \\hauserver\Dataserver\_Batchprozesse\Backup\notify_config.json
 
 [settings]
 ; Nur aktive Geraete pruefen (True empfohlen)
