@@ -1,3 +1,8 @@
+## [1.1.0] - 2026-10-23
+- Telegram ueber zentrale Bibliothek `D:\Dataserver\_Batchprozesse\_shared\notify_telegram.py` (Standard CS-028): eigene `send_telegram`/`load_notify_config` entfernt, ebenso der UNC-Verweis auf `Backup\notify_config.json` (Fehlerquelle aus 1.0.6) und die direkte `requests`-Nutzung
+- `[files] notify_config` in `mac_monitor.ini` nicht mehr noetig (Pflichtfeld entfernt, Vorlage + README angepasst)
+- Fehlgeschlagene Alerts landen zusaetzlich in `_Batchprozesse\logs\notify_failed.log`; Abstuerze meldet der zentrale `task_watchdog` (taeglich), nicht der Monitor selbst (stuendlicher Lauf -> sonst Meldungsflut)
+
 ## [1.0.7] - 2026-08-31
 - known_macs.json: `AHFold` (`7A:68:0D:E2:EF:5D`, .58) und `shellyfloodHebe` (`EC:64:C9:C1:E5:7D`, .60) als legitime Geraete whitelisted – beide waren seit 29./30.08.2026 wiederholt als unbekannt geflaggt worden, User hat sie als bekannt bestaetigt (176 Eintraege)
 - alerted_macs.json bereinigt: `AHFold`-Eintrag entfernt, der als "bereits gemeldet" markiert war, obwohl der zugehoerige Telegram-Alert wegen des in 1.0.6 gefixten Pfad-Bugs nie tatsaechlich zugestellt wurde

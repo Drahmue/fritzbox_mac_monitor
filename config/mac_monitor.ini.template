@@ -10,8 +10,7 @@ password = DEIN_FRITZBOX_PASSWORT
 log_file          = logs/mac_monitor.log
 known_macs_file   = config/known_macs.json
 alerted_macs_file = data/alerted_macs.json
-; Pfad zur notify_config.json des Backup-Projekts (UNC-Pfad auf HauServer)
-notify_config     = \\hauserver\Dataserver\_Batchprozesse\Backup\notify_config.json
+; Telegram: zentral ueber D:\Dataserver\_Batchprozesse\_shared\notify_telegram.py (kein Eintrag noetig)
 
 [settings]
 ; Nur aktive Geraete pruefen (True empfohlen)

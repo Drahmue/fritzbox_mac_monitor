@@ -26,12 +26,19 @@ from configparser import ConfigParser
 from datetime import datetime
 from pathlib import Path
 
-import requests
 from fritzconnection.core.exceptions import (
     FritzAuthorizationError,
     FritzConnectionException,
 )
 from fritzconnection.lib.fritzhosts import FritzHosts
+
+# Gemeinsame Telegram-Bibliothek aller Batchprozesse (Token/Chat-ID zentral in _shared\notify_config.json)
+sys.path.insert(0, r"D:\Dataserver\_Batchprozesse\_shared")
+try:
+    from notify_telegram import send_message
+except ImportError:
+    def send_message(text: str) -> bool:
+        return False
 
 # Arbeitsverzeichnis auf Projektwurzel setzen (parent von src/)
 os.chdir(Path(__file__).parent.parent)
@@ -66,7 +73,7 @@ def load_config(config_path: str) -> ConfigParser:
 
     required = {
         "fritzbox": ["ip", "password"],
-        "files": ["log_file", "known_macs_file", "alerted_macs_file", "notify_config"],
+        "files": ["log_file", "known_macs_file", "alerted_macs_file"],
         "settings": ["active_only"],
     }
     for section, keys in required.items():
@@ -247,55 +254,6 @@ def save_alerted_macs(path: str, alerted: dict) -> None:
 # Telegram
 # ---------------------------------------------------------------------------
 
-def send_telegram(token: str, chat_id: str, message: str) -> bool:
-    """
-    Sendet eine Nachricht ueber die Telegram Bot API.
-
-    Args:
-        token (str): Telegram Bot-Token.
-        chat_id (str): Ziel-Chat-ID.
-        message (str): Zu sendende Nachricht.
-
-    Returns:
-        bool: True bei Erfolg, False bei Fehler.
-    """
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    try:
-        resp = requests.post(
-            url,
-            json={"chat_id": chat_id, "text": message},
-            timeout=10,
-        )
-        if not resp.ok:
-            logger.warning("Telegram-Fehler: HTTP %s – %s", resp.status_code, resp.text)
-            return False
-        return True
-    except requests.RequestException as exc:
-        logger.warning("Telegram konnte nicht erreicht werden: %s", exc)
-        return False
-
-
-def load_notify_config(path: str) -> dict:
-    """
-    Laedt die geteilte Benachrichtigungskonfiguration (notify_config.json).
-
-    Args:
-        path (str): Pfad zu notify_config.json.
-
-    Returns:
-        dict: Geparste JSON-Daten. Leeres Dict bei Fehler.
-    """
-    notify_path = Path(path)
-    if not notify_path.exists():
-        logger.warning("notify_config.json nicht gefunden: %s – kein Telegram-Alert", path)
-        return {}
-    try:
-        return json.loads(notify_path.read_text(encoding="utf-8"))
-    except json.JSONDecodeError as exc:
-        logger.warning("Fehler beim Lesen von notify_config.json: %s – kein Telegram-Alert", exc)
-        return {}
-
-
 def build_telegram_message(host: dict, hostname: str) -> str:
     """
     Erstellt die Telegram-Alertnachricht fuer ein unbekanntes Geraet.
@@ -372,7 +330,6 @@ def main() -> None:
     # JSON-Dateien laden
     known_macs_file = config.get("files", "known_macs_file")
     alerted_macs_file = config.get("files", "alerted_macs_file")
-    notify_config_file = config.get("files", "notify_config")
 
     known_macs = load_known_macs(known_macs_file)
     alerted_macs = load_alerted_macs(alerted_macs_file)
@@ -407,11 +364,6 @@ def main() -> None:
     if not unknown_hosts:
         screen_and_log("Alle aktiven Geraete bekannt – kein Alert.")
     else:
-        # Telegram-Konfiguration laden
-        notify_cfg = load_notify_config(notify_config_file)
-        telegram_enabled = str(notify_cfg.get("notify_telegram", "false")).lower() == "true"
-        token = notify_cfg.get("telegram_bot_token", "")
-        chat_id = str(notify_cfg.get("telegram_chat_id", ""))
         hostname = socket.gethostname()
 
         for host in unknown_hosts:
@@ -426,15 +378,13 @@ def main() -> None:
                 "ip": host["ip"],
             }
 
-            if telegram_enabled and token and chat_id:
-                message = build_telegram_message(host, hostname)
-                success = send_telegram(token, chat_id, message)
-                if success:
-                    screen_and_log(f"Telegram-Alert gesendet fuer MAC {host['mac']}")
-                else:
-                    screen_and_log(f"Telegram-Alert FEHLGESCHLAGEN fuer MAC {host['mac']}")
+            if send_message(build_telegram_message(host, hostname)):
+                screen_and_log(f"Telegram-Alert gesendet fuer MAC {host['mac']}")
             else:
-                screen_and_log("Telegram deaktiviert oder nicht konfiguriert – nur Log.")
+                screen_and_log(
+                    f"Telegram-Alert FEHLGESCHLAGEN fuer MAC {host['mac']} "
+                    r"(siehe D:\Dataserver\_Batchprozesse\logs\notify_failed.log)"
+                )
 
     # alerted_macs.json speichern
     save_alerted_macs(alerted_macs_file, alerted_macs)

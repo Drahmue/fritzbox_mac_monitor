@@ -16,7 +16,7 @@ git clone https://github.com/Drahmue/fritzbox_mac_monitor.git
 cd fritzbox_mac_monitor
 python -m pip install -r requirements.txt
 cp config/mac_monitor.ini.template config/mac_monitor.ini
-# mac_monitor.ini anpassen: Passwort + Pfad zu notify_config.json
+# mac_monitor.ini anpassen: Passwort (Telegram zentral ueber _Batchprozesse\_shared\notify_telegram.py)
 ```
 
 ## Konfiguration
@@ -27,7 +27,6 @@ cp config/mac_monitor.ini.template config/mac_monitor.ini
 |-----------|-------------|
 | `[fritzbox] ip` | IP-Adresse der Fritz!Box (Standard: 192.168.178.1) |
 | `[fritzbox] password` | Fritz!Box-Passwort |
-| `[files] notify_config` | Pfad zur `notify_config.json` des Backup-Projekts |
 | `[files] known_macs_file` | Pfad zur MAC-Whitelist (Standard: config/known_macs.json) |
 | `[files] alerted_macs_file` | Pfad zur Deduplication-Datei (Standard: data/alerted_macs.json) |
 | `[files] log_file` | Pfad zur Log-Datei (Standard: logs/mac_monitor.log) |
