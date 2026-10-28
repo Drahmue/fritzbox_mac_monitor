@@ -14,7 +14,8 @@ Erkennt unbekannte Geräte im Heimnetz via Fritz!Box TR-064 API und sendet bei n
 ```bash
 git clone https://github.com/Drahmue/fritzbox_mac_monitor.git
 cd fritzbox_mac_monitor
-python -m pip install -r requirements.txt
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
 cp config/mac_monitor.ini.template config/mac_monitor.ini
 # mac_monitor.ini anpassen: Passwort (Telegram zentral ueber _Batchprozesse\_shared\notify_telegram.py)
 ```
@@ -29,7 +30,7 @@ cp config/mac_monitor.ini.template config/mac_monitor.ini
 | `[fritzbox] password` | Fritz!Box-Passwort |
 | `[files] known_macs_file` | Pfad zur MAC-Whitelist (Standard: config/known_macs.json) |
 | `[files] alerted_macs_file` | Pfad zur Deduplication-Datei (Standard: data/alerted_macs.json) |
-| `[files] log_file` | Pfad zur Log-Datei (Standard: logs/mac_monitor.log) |
+| `[files] log_file` | Pfad zur Log-Datei (Standard: logs/mac_monitor.log; der Monat wird angehaengt → `logs/mac_monitor_yyyy-MM.log`) |
 
 `config/known_macs.json` (in Git, manuell gepflegt):
 Alle bekannten MACs im Format `XX:XX:XX:XX:XX:XX` (Großbuchstaben).
@@ -37,10 +38,10 @@ Bei neuen Geräten manuell ergänzen und committen.
 
 ## Verwendung
 
-```bash
-python src/fritzbox_mac_monitor.py
-# oder mit explizitem Konfigurationspfad:
-python src/fritzbox_mac_monitor.py pfad/zur/config.ini
+```powershell
+.\start_fritzbox_mac_monitor.ps1
+# oder direkt:
+.venv\Scripts\python.exe src/fritzbox_mac_monitor.py [pfad/zur/config.ini]
 ```
 
 ## Deployment (HauServer)
@@ -49,7 +50,10 @@ python src/fritzbox_mac_monitor.py pfad/zur/config.ini
 D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\
 ```
 
-Windows Task Scheduler: Ordner `AHSkripts`, stündlich ab 05:00, Service-Account, Startordner = Projektverzeichnis.
+Windows Task Scheduler: `\AHSkripts\FritzboxMacMonitor`, stündlich ab 05:00, Konto `Service`,
+Aktion `powershell.exe -File D:\Dataserver\_Batchprozesse\fritzbox_mac_monitor\start_fritzbox_mac_monitor.ps1`,
+Startordner = Projektverzeichnis (lokaler Pfad, kein UNC). Umstellen bzw. neu setzen mit `task_umstellen.ps1`
+(als Administrator, Kennwort `Service` wird verdeckt abgefragt).
 
 ## Logs
 

@@ -95,12 +95,14 @@ def load_config(config_path: str) -> ConfigParser:
 def setup_logging(log_file: str) -> None:
     """
     Richtet das Logging mit FileHandler (UTF-8, INFO-Level) ein.
-    Das Verzeichnis wird bei Bedarf erstellt.
+    Das Verzeichnis wird bei Bedarf erstellt. Eine Datei je Monat:
+    aus "logs/mac_monitor.log" wird "logs/mac_monitor_yyyy-MM.log".
 
     Args:
-        log_file (str): Pfad zur Log-Datei.
+        log_file (str): Pfad zur Log-Datei (ohne Monat).
     """
     log_path = Path(log_file)
+    log_path = log_path.with_name(f"{log_path.stem}_{datetime.now():%Y-%m}{log_path.suffix}")
     log_path.parent.mkdir(parents=True, exist_ok=True)
 
     logging.basicConfig(

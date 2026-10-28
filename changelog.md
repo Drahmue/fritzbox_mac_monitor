@@ -1,3 +1,9 @@
+## [1.2.0] - 2026-10-28
+- Lokale Pfade und eigene `.venv` (datahub DH-031): Start ueber `start_fritzbox_mac_monitor.ps1` (`D:\...`, `.venv\Scripts\python.exe`) statt `python` aus dem PATH mit UNC-Arbeitsverzeichnis `\\HauServer\Dataserver\...`
+- `task_umstellen.ps1`: stellt die Aktion des Tasks `\AHSkripts\FritzboxMacMonitor` um (Kennwort `Service` verdeckt abgefragt), Trigger und Konto unveraendert
+- Log als Monatsdatei `logs/mac_monitor_yyyy-MM.log` (`[files] log_file` bleibt `logs/mac_monitor.log`, der Monat wird angehaengt); alte `logs/mac_monitor.log` (8,5 MB) bleibt liegen
+- Testlauf 28.10. von Hand: 114 aktive Geraete, 0 unbekannt, Exit 0
+
 ## [1.1.0] - 2026-10-23
 - Telegram ueber zentrale Bibliothek `D:\Dataserver\_Batchprozesse\_shared\notify_telegram.py` (Standard CS-028): eigene `send_telegram`/`load_notify_config` entfernt, ebenso der UNC-Verweis auf `Backup\notify_config.json` (Fehlerquelle aus 1.0.6) und die direkte `requests`-Nutzung
 - `[files] notify_config` in `mac_monitor.ini` nicht mehr noetig (Pflichtfeld entfernt, Vorlage + README angepasst)
