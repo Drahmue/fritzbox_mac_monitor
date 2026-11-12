@@ -15,5 +15,12 @@ if (-not (Test-Path $VenvPython)) {
     exit 1
 }
 
+# Bei Exit <> 0 haengt Invoke-Logged die Konsolenausgabe (z. B. Traceback) ans Log an (datahub DH-063).
+$lib = "D:\Dataserver\_Batchprozesse\_shared\Invoke-Logged.psm1"
+if (Test-Path $lib) {
+    Import-Module $lib -Force
+    exit (Invoke-Logged -FilePath $VenvPython -ArgumentList @($Script) -Mode OnError `
+            -LogFile "$ProjectDir\logs\mac_monitor_$(Get-Date -Format 'yyyy-MM').log")
+}
 & $VenvPython $Script
 exit $LASTEXITCODE
