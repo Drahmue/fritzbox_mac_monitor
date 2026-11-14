@@ -45,6 +45,29 @@ os.chdir(Path(__file__).parent.parent)
 
 logger = logging.getLogger(__name__)
 
+KEYRING_DIENST = "datahub/fritzbox"
+
+
+def geheimnis(dienst: str, name: str, ini_wert: str | None) -> str:
+    """Zugangsdaten aus dem keyring des Task-Kontos (datahub DH-055).
+    Steht ein Wert in der INI, wird er in den keyring uebernommen (Ersteinrichtung oder neuer Wert),
+    danach kann er in der INI geleert werden. Fehlt beides: Fehler mit Hinweis."""
+    import keyring
+    ini_wert = (ini_wert or "").strip()
+    gespeichert = keyring.get_password(dienst, name)
+    if ini_wert and ini_wert != gespeichert:
+        keyring.set_password(dienst, name, ini_wert)
+        if keyring.get_password(dienst, name) != ini_wert:
+            raise RuntimeError(f"keyring {dienst}/{name}: Uebernahme aus der INI fehlgeschlagen")
+        logger.warning("keyring %s/%s: Wert aus der INI uebernommen - bitte in der INI leeren", dienst, name)
+        return ini_wert
+    if gespeichert:
+        if ini_wert:
+            logger.warning("keyring %s/%s: Wert steht noch in der INI - bitte dort leeren", dienst, name)
+        return gespeichert
+    raise ValueError(f"keyring {dienst}/{name} leer und kein Wert in der INI - Wert (KeePass) in der INI "
+                     "eintragen, er wird beim naechsten Lauf in den keyring uebernommen")
+
 
 # ---------------------------------------------------------------------------
 # Konfiguration
@@ -341,7 +364,7 @@ def main() -> None:
 
     # Fritz!Box verbinden
     fritz_ip = config.get("fritzbox", "ip")
-    fritz_pw = config.get("fritzbox", "password")
+    fritz_pw = geheimnis(KEYRING_DIENST, "password", config.get("fritzbox", "password", fallback=""))
 
     screen_and_log(f"Verbinde mit Fritz!Box ({fritz_ip}) ...")
     fh = connect_to_fritzbox(fritz_ip, fritz_pw)

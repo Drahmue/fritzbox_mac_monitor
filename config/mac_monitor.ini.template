@@ -1,10 +1,13 @@
 ; mac_monitor.ini.template - Vorlage fuer mac_monitor.ini
 ; Kopieren nach mac_monitor.ini und Werte eintragen
-; mac_monitor.ini ist gitignored (enthaelt Passwort)
+; mac_monitor.ini ist gitignored
 
 [fritzbox]
 ip = 192.168.178.1
-password = DEIN_FRITZBOX_PASSWORT
+; Passwort steht im keyring des Task-Kontos (Dienst datahub/fritzbox, datahub DH-055).
+; Zur Ersteinrichtung oder bei neuem Wert hier eintragen: Der naechste Lauf uebernimmt es
+; in den keyring (Hinweis im Log), danach den Wert hier wieder leeren.
+password =
 
 [files]
 log_file          = logs/mac_monitor.log
